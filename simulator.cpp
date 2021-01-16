@@ -31,52 +31,65 @@ int main() {
     }
   });
 
+  std::cout << "Initial State" << std::endl;
+
   std::cout << "State: " << kATMScreenStateToString.at(atm.getState()) << std::endl;;
   std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(1000)));
+  std::cout << std::endl;
 
+  std::cout << "Card reader: 1234123412341234" << std::endl;
   atm.cardReaderCB(1234123412341234);
   std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(1000)));
-
   std::cout << "State: " << kATMScreenStateToString.at(atm.getState()) << std::endl;;
   std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(1000)));
+  std::cout << std::endl;
 
+  std::cout << "Enter pin: 1234" << std::endl;
   atm.enterPinCB(1234);
   std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(1000)));
-
   std::cout << "State: " << kATMScreenStateToString.at(atm.getState()) << std::endl;;
   std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(1000)));
+  std::cout << std::endl;
 
+  std::cout << "Select CHECKING account" << std::endl;
   atm.accountSelectCB(AccountType::CHECKING);
   std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(1000)));
-
   std::cout << "State: " << kATMScreenStateToString.at(atm.getState()) << std::endl;;
   std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(1000)));
+  std::cout << std::endl;
 
   ManagementAction balance_action{ManagementAction::ManagementActionType::BALANCE};
   ManagementAction deposit_action{ManagementAction::ManagementActionType::DEPOSIT, 100};
   ManagementAction withdraw_action{ManagementAction::ManagementActionType::WITHDRAW, 150};
   ManagementAction done_action{ManagementAction::ManagementActionType::DONE};
 
+  std::cout << "Check balance" << std::endl;
   atm.accountManagementCB(balance_action);
   std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(1000)));
+  std::cout << std::endl;
 
+  std::cout << "Deposit 100 bucks" << std::endl;
   atm.accountManagementCB(deposit_action);
   std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(1000)));
-
+  std::cout << "Check balance" << std::endl;
   atm.accountManagementCB(balance_action);
   std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(1000)));
+  std::cout << std::endl;
 
+  std::cout << "Withdraw 150 bucks" << std::endl;
   atm.accountManagementCB(withdraw_action);
   std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(1000)));
-
+  std::cout << "Check balance" << std::endl;
   atm.accountManagementCB(balance_action);
   std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(1000)));
+  std::cout << std::endl;
 
+  std::cout << "Signal done with the ATM" << std::endl;
   atm.accountManagementCB(done_action);
   std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(1000)));
-
   std::cout << "State: " << kATMScreenStateToString.at(atm.getState()) << std::endl;;
   std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(1000)));
+  std::cout << std::endl;
 
   ok = false;
   t.join();

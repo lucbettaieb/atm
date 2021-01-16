@@ -10,21 +10,6 @@
 #include <unordered_map>
 #include <utility>
 
-/// Simulated accounts and pin
-static std::unordered_map<uint64_t, uint16_t> kAccountPins = {
-  {1234123412341234, 1234},
-  {2345234523452345, 2345}
-};
-
-/// Simulated accounts and their balances (checking / savings)
-static std::unordered_map<uint64_t, Balances> kAccountBalances = {
-  {1234123412341234, {1000, 10000}},
-  {2345234523452345, {9999, 99999}}
-};
-
-/// Simulated amount of money available in the atm
-static uint kAvailableCashLogged = 100000;
-
 /// Enumerated type for which account to access
 enum AccountType {
   CHECKING = 0,
@@ -59,6 +44,21 @@ struct Balances {
     }
   }
 };
+
+/// Simulated accounts and pin
+static std::unordered_map<uint64_t, uint16_t> kAccountPins = {
+  {1234123412341234, 1234},
+  {2345234523452345, 2345}
+};
+
+/// Simulated accounts and their balances (checking / savings)
+static std::unordered_map<uint64_t, Balances> kAccountBalances = {
+  {1234123412341234, {1000, 10000}},
+  {2345234523452345, {9999, 99999}}
+};
+
+/// Simulated amount of money available in the atm
+static uint kAvailableCashLogged = 100000;
 
 /**
  * @brief Class to represent machine functions and bank server queries
