@@ -1,5 +1,5 @@
 /**
- * ATM Controller
+ * ATM Controller Simulator
  * Luc Bettaieb, 2021
  */
 
@@ -7,7 +7,6 @@
 #include <deque>
 #include <iostream>
 #include <memory>
-
 
 // ATM Controller
 #include "atm.h"

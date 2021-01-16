@@ -10,6 +10,13 @@ cmake ../
 make
 ```
 
+### Try out the simulation
+```
+./simulator
 
-### References
- - https://github.com/ttroy50/cmake-examples/
+```
+
+## Run unit tests
+```
+./unit_tests
+```
