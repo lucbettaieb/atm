@@ -13,6 +13,9 @@
 // ATM Controller
 #include "machine.h"
 
+/**
+ * @brief A struct to be used as message for actions to be performed on an account
+ */
 struct ManagementAction {
   enum ManagementActionType { WITHDRAW = 0, DEPOSIT = 1, BALANCE = 2, DONE = 4 };
 
@@ -28,16 +31,27 @@ struct ManagementAction {
  */
 class Account {
  public:
+  /**
+   * @brief Constructor for the account
+   * 
+   * @param machine A pointer to the machine/server interface
+   * @param accountNumber The account number to open and register with
+   */
   Account(std::shared_ptr<Machine> machine, uint64_t accountNumber);
 
+  /// Unlocks the account when given the right pin
   void unlock(uint16_t pin);
 
+  /// Selects the account type when given a valid account type
   void selectType(const AccountType accountType);
 
+  /// Returns the balance of the account
   int getBalance();
 
+  /// Deposits money into the account
   void deposit(int deposit_amount);
 
+  /// Withdraws money from the account
   void withdraw(uint withdraw_amount);
 
  private:

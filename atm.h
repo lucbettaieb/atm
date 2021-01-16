@@ -28,23 +28,29 @@ static std::unordered_map<ATMScreenState, std::string> kATMScreenStateToString{
 
 class ATM {
  public:
+  /// Constructor for the ATM
   ATM();
 
-  // Main callback service request function
+  /// Main callback service request function
   void service();
 
-  void accountManagementCB(const ManagementAction& action);
-
-  void accountSelectCB(const AccountType accountType);
-
-  void enterPinCB(const uint16_t pin);
-
+  /// Callback function to give the controller an account number, presumably from a card reader
   void cardReaderCB(const uint64_t accountNumber);
 
+  /// Callback function to give the controller an account pin, presumably from a keypad
+  void enterPinCB(const uint16_t pin);
+
+  /// Callback function to select which account to use, presumably from a button
+  void accountSelectCB(const AccountType accountType);
+
+  /// Callback function for the interface to give an account management action to the controller
+  void accountManagementCB(const ManagementAction& action);
+
+  /// Returns the current state of the ATM screen to render to the user
   ATMScreenState getState();
 
  private:
-
+  /// Internal "callback" to request a state transition
   void transitionCB(const ATMScreenState& desiredState);
 
   /**
@@ -65,12 +71,16 @@ class ATM {
    */
   bool validTransition(const ATMScreenState& desiredState);
 
+  /// The current account being managed.  nullptr if disconnected
   std::shared_ptr<Account> current_account_;
 
+  /// Interface to the machine / server control
   std::shared_ptr<Machine> machine_;
 
+  /// The current state of the ATM Screen
   ATMScreenState state_;
 
+  /// The callback queue of requested state transitions
   std::deque<ATMScreenState> state_transition_cb_queue_;
 };
 
