@@ -6,10 +6,11 @@
 #ifndef ATM_MACHINE_H
 #define ATM_MACHINE_H
 
-#include <utility>
+// C++ Standard Library
 #include <unordered_map>
+#include <utility>
 
-static std::unordered_map<uint16_t, uint8_t> kAccountPins = {
+static std::unordered_map<uint64_t, uint16_t> kAccountPins = {
   {1234123412341234, 1234},
   {2345234523452345, 2345}
 };
@@ -20,7 +21,7 @@ enum AccountType {
 };
 
 struct Balances {
-  Balances(int s, int c) :
+  Balances(int c, int s) :
     savings(s),
     checking(c) {}
 
@@ -47,7 +48,7 @@ struct Balances {
   }
 };
 
-static std::unordered_map<uint16_t, Balances> kAccountBalances = {
+static std::unordered_map<uint64_t, Balances> kAccountBalances = {
   {1234123412341234, {1000, 10000}},
   {2345234523452345, {9999, 99999}}
 };
@@ -59,39 +60,20 @@ static uint kAvailableCashLogged = 100000;
  */
 class Machine {
 public:
-  Machine() :
-    account_pins_(initializeAccountPins()),
-    available_cash_(initializeAvailableCash())
-   {}
+  Machine();
 
-  uint8_t getPin(uint16_t accountNumber) {
-    if (account_pins_.find(accountNumber) == account_pins_.end()){
-      throw std::runtime_error("Account not found");
-    }
-    return account_pins_.at(accountNumber);
-  }
+  uint16_t getPin(uint64_t accountNumber);
 
-  Balances getAccountBalances(uint16_t accountNumber) {
-    // simulates request to server for account balance for number and type associated with number
-    return kAccountBalances.at(accountNumber);
-  }
+  Balances getAccountBalances(uint64_t accountNumber);
 
-  void updateAccountBalance(uint16_t accountNumber, int amount) {
-    // Send to server information about debit or credit to an account
+  void updateAccountBalance(uint64_t accountNumber, int amount);
 
-  }
+  uint getAvailableCash();
 
-  uint getAvailableCash() {
-    return available_cash_;
-  }
-
-  void disburseCash(uint amount) {
-    // Call to motor controller or something to deposit cash
-    available_cash_ -= amount;
-  }
+  void disburseCash(uint amount);
 
 private:
-  inline std::unordered_map<uint16_t, uint8_t> initializeAccountPins() {
+  inline std::unordered_map<uint64_t, uint16_t> initializeAccountPins() {
     // Make call to server to get account pins
     // TODO(enhancement): Maybe just do one at a time actually
     return kAccountPins;
@@ -112,7 +94,8 @@ private:
   /// The amount of cash available in the ATM
   uint available_cash_;
 
-  std::unordered_map<uint16_t, uint8_t> account_pins_;
+  /// Simulated database of account pins
+  std::unordered_map<uint64_t, uint16_t> account_pins_;
 };
 
 #endif  // ATM_MACHINE_H

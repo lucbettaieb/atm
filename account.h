@@ -6,13 +6,15 @@
 #ifndef ATM_ACCOUNT_H
 #define ATM_ACCOUNT_H
 
+// C++ Standard Library
 #include <exception>
 #include <memory>
 
+// ATM Controller
 #include "machine.h"
 
 struct ManagementAction {
-  enum ManagementActionType { WITHDRAW = 0, DEPOSIT = 1, BALANCE = 2, DONE = 4};
+  enum ManagementActionType { WITHDRAW = 0, DEPOSIT = 1, BALANCE = 2, DONE = 4 };
 
   ManagementAction(ManagementActionType action, int amount = 0) : 
     action(action), amount(amount) {}
@@ -26,70 +28,17 @@ struct ManagementAction {
  */
 class Account {
  public:
-  Account(std::shared_ptr<Machine> machine, uint16_t accountNumber) :
-      machine_(machine),
-      account_number_(accountNumber),
-      locked_(true),
-      pin_(machine_->getPin(accountNumber)),
-      balances_(machine->getAccountBalances(accountNumber)) {
-  }
+  Account(std::shared_ptr<Machine> machine, uint64_t accountNumber);
 
-  void unlock(uint8_t pin) {
-    // TODO(luc): hash
-    if (pin == pin_) {
-      // Request from server account details
+  void unlock(uint16_t pin);
 
-      locked_ = false;
-    } else {
-      throw std::runtime_error("Wrong pin");
-    }
-  }
+  void selectType(const AccountType accountType);
 
-  void selectType(const AccountType accountType) {
-    if (locked_ and has_type_) {
-      throw std::runtime_error("Account is locked!");
-    }
+  int getBalance();
 
-    account_type_ = accountType;
-  }
+  void deposit(int deposit_amount);
 
-  int getBalance() {
-    if (locked_ and has_type_) {
-      throw std::runtime_error("Account is locked / type not selected");
-    }
-
-    return balances_.get(account_type_);
-  }
-
-  void deposit(int deposit_amount) {
-    if (locked_ and has_type_) {
-      throw std::runtime_error("Account is locked / type not selected");
-    }
-
-    balances_.get(account_type_) += deposit_amount;
-  }
-
-  void withdraw(uint withdraw_amount) {
-    if (locked_ and has_type_) {
-      throw std::runtime_error("Account is locked / type not selected");
-    } else if (withdraw_amount > machine_->getAvailableCash()) {
-      // Should probably give a vague error and tell the user to try another ATM
-      throw std::runtime_error("E12345: Something went wrong!");
-    } else if (withdraw_amount > balances_.limit(account_type_)) {
-      // Should probably lock user out of account for a while and trigger a security alert
-      throw std::runtime_error("E12344: Withdraw amount too great, change your settings online");
-    } else if (withdraw_amount > balances_.get(account_type_)) {
-      // Should probably lock user out of account for a while and trigger a security alert
-      throw std::runtime_error("E12343: Insufficient balance!");
-    } else {
-      // Debit account
-      balances_.get(account_type_) -= static_cast<int>(withdraw_amount);
-      machine_->updateAccountBalance(account_number_, -withdraw_amount);
-
-      // Disburse cash
-      machine_->disburseCash(withdraw_amount);
-    }
-  }
+  void withdraw(uint withdraw_amount);
 
  private:
   /// Pointer to the machine to access control functions
@@ -102,10 +51,10 @@ class Account {
   bool has_type_;
 
   /// Account number for the account
-  uint16_t account_number_;
+  uint64_t account_number_;
 
   /// The pin of the account
-  uint8_t pin_;
+  uint16_t pin_;
 
   /// The type of account we're accessing
   AccountType account_type_;
