@@ -1,5 +1,5 @@
 # ATM Controller Simulator
-### Luc Bettaieb, 2021
+Luc Bettaieb, 2021
 
 ## Usage
 ### Building
@@ -16,7 +16,7 @@ make
 
 ```
 
-## Run unit tests
+### Run unit tests
 ```
 ./unit_tests
 ```
