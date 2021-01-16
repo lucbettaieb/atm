@@ -20,3 +20,6 @@ make
 ```
 ./unit_tests
 ```
+
+## Documentation
+Check headers for API documentation.  Doxygen-supported, so you could generate that if you wanted to.
