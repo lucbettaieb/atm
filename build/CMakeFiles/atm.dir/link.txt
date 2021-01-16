@@ -1,0 +1,2 @@
+/usr/bin/ar qc libatm.a  CMakeFiles/atm.dir/atm.cpp.o CMakeFiles/atm.dir/account.cpp.o CMakeFiles/atm.dir/machine.cpp.o
+/usr/bin/ranlib libatm.a

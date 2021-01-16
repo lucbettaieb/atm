@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/luc/atm/build/third_party/gtest/googletest-download/CMakeFiles/googletest"
+		},
+		{
+			"file" : "/home/luc/atm/build/third_party/gtest/googletest-download/CMakeFiles/googletest.rule"
+		},
+		{
+			"file" : "/home/luc/atm/build/third_party/gtest/googletest-download/CMakeFiles/googletest-complete.rule"
+		},
+		{
+			"file" : "/home/luc/atm/build/third_party/gtest/googletest-download/googletest-prefix/src/googletest-stamp/googletest-install.rule"
+		},
+		{
+			"file" : "/home/luc/atm/build/third_party/gtest/googletest-download/googletest-prefix/src/googletest-stamp/googletest-mkdir.rule"
+		},
+		{
+			"file" : "/home/luc/atm/build/third_party/gtest/googletest-download/googletest-prefix/src/googletest-stamp/googletest-download.rule"
+		},
+		{
+			"file" : "/home/luc/atm/build/third_party/gtest/googletest-download/googletest-prefix/src/googletest-stamp/googletest-update.rule"
+		},
+		{
+			"file" : "/home/luc/atm/build/third_party/gtest/googletest-download/googletest-prefix/src/googletest-stamp/googletest-patch.rule"
+		},
+		{
+			"file" : "/home/luc/atm/build/third_party/gtest/googletest-download/googletest-prefix/src/googletest-stamp/googletest-configure.rule"
+		},
+		{
+			"file" : "/home/luc/atm/build/third_party/gtest/googletest-download/googletest-prefix/src/googletest-stamp/googletest-build.rule"
+		},
+		{
+			"file" : "/home/luc/atm/build/third_party/gtest/googletest-download/googletest-prefix/src/googletest-stamp/googletest-test.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"googletest"
+		],
+		"name" : "googletest"
+	}
+}
